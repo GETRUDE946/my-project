@@ -1,7 +1,16 @@
 print("=== Budget Tracker ===")
 
+
 income = 0
 expense = 0
+
+try:
+    with open("budget_data.txt", "r") as file:
+        income = float(file.readline())
+        expense = float(file.readline())
+except FileNotFoundError:
+    pass
+
 
 while True:
     print("\n1. Add income")
@@ -16,10 +25,19 @@ while True:
         income = income + new_income
         print("Income added:", new_income)
 
+        with open("budget_data.txt", "w") as file:
+            file.write(str(income) + "\n")
+            file.write(str(expense) + "\n")
+
+
     elif choice == "2":
         new_expense = float(input("Enter your expense: $"))
         expense = expense + new_expense
         print("Expense added:", new_expense)
+
+        with open("budget_data.txt", "w") as file:
+            file.write(str(income) + "\n")
+            file.write(str(expense) + "\n")
 
     elif choice == "3":
         balance = income - expense
