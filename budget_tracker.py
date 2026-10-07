@@ -1,6 +1,5 @@
 print("=== Budget Tracker ===")
 
-
 income = 0
 expense = 0
 
@@ -11,7 +10,6 @@ try:
 except FileNotFoundError:
     pass
 
-
 while True:
     print("\n1. Add income")
     print("2. Add expense")
@@ -21,23 +19,46 @@ while True:
     choice = input("Choose an option: ")
 
     if choice == "1":
-        new_income = float(input("Enter your income: $"))
+        while True:
+            try:
+                new_income = float(input("Enter your income: $"))
+
+                if new_income > 0:
+                    break
+                else:
+                    print("Amount must be greater than 0.")
+
+            except ValueError:
+                print("Invalid amount. Please enter a number.")
+
         income = income + new_income
+
+        with open("budget_data.txt", "w") as file:
+            file.write(str(income) + "\n")
+            file.write(str(expense) + "\n")
+
         print("Income added:", new_income)
 
-        with open("budget_data.txt", "w") as file:
-            file.write(str(income) + "\n")
-            file.write(str(expense) + "\n")
-
-
     elif choice == "2":
-        new_expense = float(input("Enter your expense: $"))
+        while True:
+            try:
+                new_expense = float(input("Enter your expense: $"))
+
+                if new_expense > 0:
+                    break
+                else:
+                    print("Amount must be greater than 0.")
+
+            except ValueError:
+                print("Invalid amount. Please enter a number.")
+
         expense = expense + new_expense
-        print("Expense added:", new_expense)
 
         with open("budget_data.txt", "w") as file:
             file.write(str(income) + "\n")
             file.write(str(expense) + "\n")
+
+        print("Expense added:", new_expense)
 
     elif choice == "3":
         balance = income - expense
@@ -46,6 +67,9 @@ while True:
         print("Total income:", income)
         print("Total expenses:", expense)
         print("Balance:", balance)
+
+        if balance < 0:
+            print("You are over budget!")
 
     elif choice == "4":
         print("Thank you for using Budget Tracker!")
