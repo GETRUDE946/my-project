@@ -14,7 +14,8 @@ while True:
     print("\n1. Add income")
     print("2. Add expense")
     print("3. View balance")
-    print("4. Exit")
+    print("4. View transaction history")
+    print("5. Exit")
 
     choice = input("Choose an option: ")
 
@@ -38,6 +39,9 @@ while True:
             file.write(str(expense) + "\n")
 
         print("Income added:", new_income)
+        with open("transactions.txt", "a") as file:
+            file.write("Income, " + str(new_income) + "\n")
+
 
     elif choice == "2":
         while True:
@@ -59,7 +63,10 @@ while True:
             file.write(str(expense) + "\n")
 
         print("Expense added:", new_expense)
+        with open("transactions.txt", "a") as file:
+            file.write("Expense, " + str(new_expense) + "\n")
 
+    
     elif choice == "3":
         balance = income - expense
 
@@ -72,8 +79,25 @@ while True:
             print("You are over budget!")
 
     elif choice == "4":
+        print("\n=== Transaction History ===")
+
+        try:
+            with open("transactions.txt", "r") as file:
+                transactions = file.readlines()
+
+            if transactions:
+                for transaction in transactions:
+                    print(transaction.strip())
+            else:
+                print("No transactions recorded yet.")
+
+        except FileNotFoundError:
+            print("No transactions recorded yet.")
+
+    elif choice == "5":
         print("Thank you for using Budget Tracker!")
         break
 
     else:
-        print("Invalid option. Please choose 1-4.")
+        print("Invalid option. Please choose 1-5.")
+
