@@ -58,13 +58,15 @@ while True:
 
         expense = expense + new_expense
 
+        category = input("Enter expense category: ")
+
         with open("budget_data.txt", "w") as file:
             file.write(str(income) + "\n")
             file.write(str(expense) + "\n")
 
         print("Expense added:", new_expense)
         with open("transactions.txt", "a") as file:
-            file.write("Expense, " + str(new_expense) + "\n")
+           file.write("Expense, " + str(new_expense) + ", " + category + "\n")
 
     
     elif choice == "3":
